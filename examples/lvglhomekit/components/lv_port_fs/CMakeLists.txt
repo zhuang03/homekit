@@ -6,4 +6,4 @@ set(mysrcs "lv_port_indev.c"
  
 idf_component_register(SRCS  "${mysrcs}"
                        INCLUDE_DIRS "include"
-					   REQUIRES lvgl fatfs lvgl_esp32_drivers)
+					   REQUIRES lvgl fatfs lvgl_esp32_drivers lv_lib_split_jpg)

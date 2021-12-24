@@ -1,10 +1,15 @@
-#ifndef __MPU6050_H
-#define __MPU6050_H
+#ifndef __MPU6050_H_
+#define __MPU6050_H_
   												  	  
 #include <stdio.h>
 #include <string.h>
 
-  
+#ifdef __cplusplus
+extern "C" {
+#endif
+ 
+
+
 //#define MPU_ACCEL_OFFS_REG		0X06	//accel_offs寄存器,可读取版本号,寄存器手册未提到
 //#define MPU_PROD_ID_REG			0X0C	//prod id寄存器,在寄存器手册未提到
 #define MPU_SELF_TESTX_REG		0X0D	//自检寄存器X
@@ -74,52 +79,94 @@
 #define MPU_FIFO_RW_REG			0X74	//FIFO读写寄存器
 #define MPU_DEVICE_ID_REG		0X75	//器件ID寄存器
  
-//如果AD0脚(9脚)接地,IIC地址为0X68(不包含最低位).
-//如果接V3.3,则IIC地址为0X69(不包含最低位).
-#define MPU_ADDR				0X68
-// #define MPU_ADDR				0XD0
-#define MPU6050_READ            1
-#define MPU6050__WRITE          0
+// //如果AD0脚(9脚)接地,IIC地址为0X68(不包含最低位).
+// //如果接V3.3,则IIC地址为0X69(不包含最低位).
+// #define MPU_ADDR				0X68
+// // #define MPU_ADDR				0XD0
+// #define MPU6050_READ            1
+// #define MPU6050__WRITE          0
 
 ////因为模块AD0默认接GND,所以转为读写地址后,为0XD1和0XD0(如果接VCC,则为0XD3和0XD2)  
 //#define MPU_READ    0XD1
 //#define MPU_WRITE   0XD0
 
-
-uint8_t Init_Mpu6050(void); /*初始化MPU6050*/
-							
-uint8_t MPU_Write_Len(uint8_t addr,uint8_t reg,uint8_t len,uint8_t *buf);//IIC连续写
-uint8_t MPU_Read_Len(uint8_t addr,uint8_t reg,uint8_t len,uint8_t *buf); //IIC连续读 
-uint8_t MPU_Write_Byte(uint8_t reg,uint8_t data);				//IIC写一个字节
-uint8_t MPU_Read_Byte(uint8_t reg);						//IIC读一个字节
-
-uint8_t MPU_Set_Gyro_Fsr(uint8_t fsr);
-uint8_t MPU_Set_Accel_Fsr(uint8_t fsr);
-uint8_t MPU_Set_LPF(uint16_t lpf);
-uint8_t MPU_Set_Rate(uint16_t rate);
-uint8_t MPU_Set_Fifo(uint8_t sens);
-
-
-short MPU_Get_Temperature(void);
-uint8_t MPU_Get_Gyroscope(short *gx,short *gy,short *gz);
-uint8_t MPU_Get_Accelerometer(short *ax,short *ay,short *az);
-
-
-uint8_t MPU_Set_Temperature_Fsr(uint8_t fsr);/*设置温度模式*/
-
-
-void Mpu6050_Sleep_Iint(void);/*MPU6050 休眠状态*/
-
-void Mpu6050_Wakepu_Iint(void);
-
-/*
- *initialization i2c  mpu6050
- */
-void Init_I2c_Mpu6050(void);
+class Mpu6050
+{
+private:
+     uint8_t res=0;
+     uint8_t data=0;
+     uint8_t buf[6]; 
+     short raw;
+ 	 float temp;
+     uint8_t MPU_Read_Byte(uint8_t reg);
+     uint8_t MPU_Write_Byte(uint8_t reg,uint8_t data);
+public:
+     void init(void);
+     uint8_t MPU_Set_Gyro_Fsr(uint8_t fsr);
+     uint8_t MPU_Set_Accel_Fsr(uint8_t fsr);
+     uint8_t MPU_Set_LPF(uint16_t lpf);
+     uint8_t MPU_Set_Rate(uint16_t rate);
+     uint8_t MPU_Set_Temperature_Fsr(uint8_t fsr);
+     short MPU_Get_Temperature(void);
+     uint8_t MPU_Get_Gyroscope(short *gx,short *gy,short *gz);
+     uint8_t MPU_Get_Accelerometer(short *ax,short *ay,short *az);
+     void Mpu6050_Sleep_Iint(void);
+     void Mpu6050_Wakepu_Iint(void);
+     uint8_t MPU_Write_Len(uint8_t addr,uint8_t reg,uint8_t len,uint8_t *buf);
+     uint8_t MPU_Read_Len(uint8_t addr,uint8_t reg,uint8_t len,uint8_t *buf);
+     uint8_t Mpu6050_Init(void);
+    Mpu6050(/* args */);
+    ~Mpu6050();
+};
 
 
+// private:
+//     uint8_t res; 
+//     uint8_t data=0;
+
+// public:
 
 
+// uint8_t Mpu6050_Init(void); /*初始化MPU6050*/
+
+
+// uint8_t MPU_Write_Len(uint8_t addr,uint8_t reg,uint8_t len,uint8_t *buf);//IIC连续写
+// uint8_t MPU_Read_Len(uint8_t addr,uint8_t reg,uint8_t len,uint8_t *buf); //IIC连续读 
+// uint8_t MPU_Write_Byte(uint8_t reg,uint8_t data);				//IIC写一个字节
+// uint8_t MPU_Read_Byte(uint8_t reg);						//IIC读一个字节
+
+// uint8_t MPU_Set_Gyro_Fsr(uint8_t fsr);
+// uint8_t MPU_Set_Accel_Fsr(uint8_t fsr);
+// uint8_t MPU_Set_LPF(uint16_t lpf);
+// uint8_t MPU_Set_Rate(uint16_t rate);
+// uint8_t MPU_Set_Fifo(uint8_t sens);
+
+
+// short MPU_Get_Temperature(void);
+// uint8_t MPU_Get_Gyroscope(short *gx,short *gy,short *gz);
+// uint8_t MPU_Get_Accelerometer(short *ax,short *ay,short *az);
+
+
+// uint8_t MPU_Set_Temperature_Fsr(uint8_t fsr);/*设置温度模式*/
+
+
+// void Mpu6050_Sleep_Iint(void);/*MPU6050 休眠状态*/
+
+// void Mpu6050_Wakepu_Iint(void);
+
+// /*
+//  *initialization i2c  mpu6050
+//  */
+// void Init_I2c_Mpu6050(void);
+//     mpu6050(/* args */);
+//     ~mpu6050();
+// };
+
+
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 #endif
 

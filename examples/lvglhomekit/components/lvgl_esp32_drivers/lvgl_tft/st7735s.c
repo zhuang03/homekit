@@ -216,7 +216,7 @@ static void st7735s_set_orientation(uint8_t orientation)
 
 
     uint8_t data[4] = {0xC8, 0xC8, 0xA8, 0xA8};
-    data[0] = 0x08;
+    data[0] = 0x40;
 	data[1] = 0x08;
 	data[2] = 0x08;
 	data[3] = 0x08;

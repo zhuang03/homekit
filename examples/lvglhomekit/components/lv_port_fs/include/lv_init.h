@@ -17,7 +17,7 @@ extern "C" {
 #include "lvgl_helpers.h"
   
 
-class lvglt
+class LvglInt
 {
 private:
     /* data */
@@ -25,8 +25,8 @@ public:
     void init(void);
     void application(void);
 
-    lvglt(/* args */);
-    ~lvglt();
+    LvglInt(/* args */);
+    ~LvglInt();
 };
 
 

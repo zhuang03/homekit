@@ -33,6 +33,7 @@
 
 #include "lv_init.h"
 #include "lv_port_fatfs.h"
+// #include "lv_sjpg.h"
 
 
 
@@ -62,16 +63,17 @@ void lv_tick_task(void *arg) {
     lv_tick_inc(LV_TICK_PERIOD_MS);
 }
 
-lvglt::lvglt(/* args */)
+LvglInt::LvglInt()
 {
+
 }
 
-lvglt::~lvglt()
+LvglInt::~LvglInt()
 {
 }
  
 
-void lvglt::init(void) 
+void LvglInt::init(void) 
 {
 
 
@@ -81,14 +83,14 @@ void lvglt::init(void)
     lvgl_driver_init();
     
     lv_fs_if_init();   /*zxx*/
+    // lv_split_jpeg_init(); /*zxx*/
 
-
-    lv_color_t* buf1 = (lv_color_t*)heap_caps_malloc(DISP_BUF_SIZE * sizeof(lv_color_t), MALLOC_CAP_DMA);
+    lv_color_t* buf1 = (lv_color_t*)heap_caps_malloc(DISP_BUF_SIZE *sizeof(lv_color_t), MALLOC_CAP_DMA);
     assert(buf1 != NULL);
 
     /* Use double buffered when not working with monochrome displays */
 #ifndef CONFIG_LV_TFT_DISPLAY_MONOCHROME
-    lv_color_t* buf2 = (lv_color_t*)heap_caps_malloc(DISP_BUF_SIZE * sizeof(lv_color_t), MALLOC_CAP_DMA);
+    lv_color_t* buf2 = (lv_color_t*)heap_caps_malloc(DISP_BUF_SIZE *sizeof(lv_color_t), MALLOC_CAP_DMA);
     assert(buf2 != NULL);
 #else
     static lv_color_t *buf2 = NULL;
@@ -163,7 +165,7 @@ void lvglt::init(void)
     // vTaskDelete(NULL);
 }
 
-void lvglt::application(void) 
+void LvglInt::application(void) 
 {
 
 //   lv_fs_file_t f;
@@ -200,8 +202,14 @@ void lvglt::application(void)
 
 
 // 	//显示开机背景--windows
+    // lv_obj_t * objpg =  lv_img_create(lv_scr_act(), NULL);				
+	// lv_img_set_src(objpg, "S:weather/mao.bin");					
+	// lv_obj_align(objpg, NULL, LV_ALIGN_IN_TOP_LEFT, 2, 2);			
+    // lv_task_handler();
+
+
     lv_obj_t * objpg =  lv_img_create(lv_scr_act(), NULL);				
-	lv_img_set_src(objpg, "S:weather/mao.bin");					
+	lv_img_set_src(objpg, "S:image/haimian.jpg");					
 	lv_obj_align(objpg, NULL, LV_ALIGN_IN_TOP_LEFT, 2, 2);			
     lv_task_handler();
 

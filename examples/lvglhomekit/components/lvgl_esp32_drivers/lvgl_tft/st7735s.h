@@ -47,7 +47,7 @@ extern "C" {
 //
 #define ST7735_GREENTAB160x80 // For 160 x 80 display (BGR, inverted, 26 / 1 offset)
 #define COLSTART            0
-#define ROWSTART            0
+#define ROWSTART            32
 
 
 

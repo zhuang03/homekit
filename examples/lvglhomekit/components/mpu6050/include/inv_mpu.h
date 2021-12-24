@@ -27,6 +27,12 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/queue.h"
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //定义输出速度
 #define DEFAULT_MPU_HZ  (100)		//100Hz
 
@@ -137,8 +143,31 @@ void mget_ms(unsigned long *time);
 unsigned short inv_row_2_scale(const signed char *row);
 unsigned short inv_orientation_matrix_to_scalar(const signed char *mtx);
 uint8_t run_self_test(void);
-uint8_t mpu_dmp_init(void);
-uint8_t mpu_dmp_get_data(float *pitch,float *roll,float *yaw);
+
+
+class InvMpu
+{
+private:
+   uint8_t res=0;
+   	float q0=1.0f,q1=0.0f,q2=0.0f,q3=0.0f;
+	unsigned long sensor_timestamp;
+	short gyro[3], accel[3], sensors;
+	unsigned char more;
+	long quat[4]; 
+public:
+    uint8_t mpu_dmp_init(void);
+    uint8_t mpu_dmp_get_data(float *pitch,float *roll,float *yaw);
+
+    InvMpu(/* args */);
+    ~InvMpu();
+};
+
+
+
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 #endif  /* #ifndef _INV_MPU_H_ */
 
