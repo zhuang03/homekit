@@ -1,9 +1,8 @@
-#ifndef APP_CONTORLLER_H
-#define APP_CONTORLLER_H
+#ifndef _APP_CONTORLLER_H_
+#define _APP_CONTORLLER_H_
 
-#include "Arduino.h"
-#include "interface.h"
-#include "driver/imu.h"
+
+#include "app_interface.h"
 #include <list>
 
 #define APP_MAX_NUM 15           // 最大的可运行的APP数量
@@ -39,10 +38,10 @@ private:
     APP_OBJ *appList[APP_MAX_NUM]; // 预留10个APP注册位
     // std::list<const APP_OBJ *> app_list; // APP注册位(为了C语言可移植，放弃使用链表)
     std::list<EVENT_OBJ> eventList;   // 用来储存事件
-    boolean m_wifi_status;            // 表示是wifi状态 true开启 false关闭
+    bool m_wifi_status;            // 表示是wifi状态 true开启 false关闭
     unsigned long m_preWifiReqMillis; // 保存上一回请求的时间戳
     unsigned int app_num;    /*当前APP编号*/
-    boolean app_exit_flag; // 表示是否退出APP应用
+    bool app_exit_flag; // 表示是否退出APP应用
     int cur_app_index;     // 当前运行的APP下标
     int pre_app_index;     // 上一次运行的APP下标
 };

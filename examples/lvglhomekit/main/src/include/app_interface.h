@@ -1,6 +1,8 @@
-#ifndef INTERFACE_H
-#define INTERFACE_H
+#ifndef _INTERFACE_H_
+#define _INTERFACE_H_
 
+
+/**/
 enum APP_EVENT_TYPE
 {
     APP_EVENT_WIFI_CONN = 0, // 开启连接
@@ -25,5 +27,6 @@ struct APP_OBJ
     void (*exit_callback)();                          // 退出之前需要处理的回调函数 可为空
     void (*on_event)(APP_EVENT_TYPE type, int event_id);  // 事件通知
 };
+
 
 #endif

@@ -15,18 +15,20 @@
 
 
 
-
+#include <time.h>
 #include "app_timer.h"
 
 
-timer_signal timer;
+static timer_signal tr;
 
 AppTimer::AppTimer(/* args */)
 {
+
 }
 
 AppTimer::~AppTimer()
 {
+
 }
 
 
@@ -35,7 +37,6 @@ AppTimer::~AppTimer()
 
 static bool IRAM_ATTR timer_group_isr_callback(void *args)
 {
-
 
      BaseType_t high_task_awoken = pdFALSE;
      
@@ -61,11 +62,7 @@ static bool IRAM_ATTR timer_group_isr_callback(void *args)
     /* Now just send the event data back to the main program task */
     // xQueueSendFromISR(s_timer_queue, &evt, &high_task_awoken);
 
-    timer.second++;
-
-
-
-
+    tr.second++;
     return high_task_awoken == pdTRUE; // return whether we need to yield at the end of ISR
 }
 
@@ -117,12 +114,36 @@ void AppTimer::init(void)
 }
 
 
-// void AppTimer::Read_Timer(uint8_t second)
-// {
+uint32_t AppTimer::Read_Timer(void)
+{
+  return  tr.second;
+}
+
+
+
+/*******************************************************************************************************************************************
+*函数名：stamp_to_standard
+*参  数：stampTime /获取到的十六进制时间
+*功  能：转换十六进制时间，为标准格式  如：2019-5-3 22:13:45
+*反  回：时间结构体
+*作  者：z
+********************************************************************************************************************************************/
+void AppTimer::get_timer(time_t tick,Device_Times *standard)
+{
+
+	// struct tm tm;
+
    
+	// tm = *(localtime(&tick));
 
+   // char timer[100]={0};
+	// strftime(timer, sizeof(timer), "%Y-%m-%d %H:%M:%S", &tm);
 
-// }
-
-
-
+	// standard->Year = atoi(timer);
+	// standard->Mon = atoi(timer+5);
+	// standard->Day = atoi(timer+8);
+	// standard->Hour = atoi(timer+11);
+   // standard->Hour = standard->Hour +8;
+	// standard->Min = atoi(timer+14);
+	// standard->Second = atoi(timer+17);      
+}

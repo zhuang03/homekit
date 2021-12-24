@@ -3,6 +3,8 @@
   												  	  
 #include <stdio.h>
 #include <string.h>
+#include "inv_mpu.h"
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -97,7 +99,8 @@ private:
      uint8_t data=0;
      uint8_t buf[6]; 
      short raw;
- 	 float temp;
+ 	float temp;
+     InvMpu inv;	  
      uint8_t MPU_Read_Byte(uint8_t reg);
      uint8_t MPU_Write_Byte(uint8_t reg,uint8_t data);
 public:
@@ -115,53 +118,11 @@ public:
      uint8_t MPU_Write_Len(uint8_t addr,uint8_t reg,uint8_t len,uint8_t *buf);
      uint8_t MPU_Read_Len(uint8_t addr,uint8_t reg,uint8_t len,uint8_t *buf);
      uint8_t Mpu6050_Init(void);
-    Mpu6050(/* args */);
-    ~Mpu6050();
+     void mpu_dmp_init(void);
+     uint8_t mpu_dmp_get_data(float *pitch,float *roll,float *yaw);
+     Mpu6050(/* args */);
+     ~Mpu6050();
 };
-
-
-// private:
-//     uint8_t res; 
-//     uint8_t data=0;
-
-// public:
-
-
-// uint8_t Mpu6050_Init(void); /*初始化MPU6050*/
-
-
-// uint8_t MPU_Write_Len(uint8_t addr,uint8_t reg,uint8_t len,uint8_t *buf);//IIC连续写
-// uint8_t MPU_Read_Len(uint8_t addr,uint8_t reg,uint8_t len,uint8_t *buf); //IIC连续读 
-// uint8_t MPU_Write_Byte(uint8_t reg,uint8_t data);				//IIC写一个字节
-// uint8_t MPU_Read_Byte(uint8_t reg);						//IIC读一个字节
-
-// uint8_t MPU_Set_Gyro_Fsr(uint8_t fsr);
-// uint8_t MPU_Set_Accel_Fsr(uint8_t fsr);
-// uint8_t MPU_Set_LPF(uint16_t lpf);
-// uint8_t MPU_Set_Rate(uint16_t rate);
-// uint8_t MPU_Set_Fifo(uint8_t sens);
-
-
-// short MPU_Get_Temperature(void);
-// uint8_t MPU_Get_Gyroscope(short *gx,short *gy,short *gz);
-// uint8_t MPU_Get_Accelerometer(short *ax,short *ay,short *az);
-
-
-// uint8_t MPU_Set_Temperature_Fsr(uint8_t fsr);/*设置温度模式*/
-
-
-// void Mpu6050_Sleep_Iint(void);/*MPU6050 休眠状态*/
-
-// void Mpu6050_Wakepu_Iint(void);
-
-// /*
-//  *initialization i2c  mpu6050
-//  */
-// void Init_I2c_Mpu6050(void);
-//     mpu6050(/* args */);
-//     ~mpu6050();
-// };
-
 
 
 #ifdef __cplusplus

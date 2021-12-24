@@ -1,9 +1,9 @@
-#ifndef IMU_H
-#define IMU_H
+#ifndef _APP_MPU6050_H_
+#define _APP_MPU6050_H_
 
-#include <I2Cdev.h>
-#include <MPU6050.h>
+
 #include "lv_port_indev.h"
+#include "mpu6050.h"
 
 #define IMU_I2C_SDA 32
 #define IMU_I2C_SCL 33
@@ -27,23 +27,25 @@ struct Imu_Action
     active_type active;
     boolean isValid;
     boolean long_time;
-    float ax;
-    float ay;
-    float az;
+    float pitch;
+    float roll;
+    float yaw;
 };
 
-class IMU
+
+class AppMpu
 {
 private:
-    MPU6050 mpu;
-    int flag;
+    Mpu6050 mpu;
+   int flag;
     long last_update_time;
 
 public:
     Imu_Action dmp_info;
 
 public:
-    IMU();
+    AppMpu();
+    ~mpu();
     void init();
     Imu_Action *update(int interval);
 };

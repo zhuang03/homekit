@@ -270,11 +270,23 @@ uint8_t Mpu6050::Mpu6050_Init(void)
  */
 void Mpu6050::init(void)
 {
-  InvMpu inv;	
+
   Init_I2c_Master();   /*初始化I2C*/
   Mpu6050_Init();
+}
 
-  inv.mpu_dmp_init();
-//   ret=mpu_dmp_init();
-//   printf("re=%d\r\n",ret);
+
+/*
+ *initialization i2c  mpu6050
+ */
+void Mpu6050::mpu_dmp_init(void)
+{
+	
+  res=inv.mpu_dmp_init();
+  ESP_LOGI(TAG,"mpu6050 ID=0x%02X\r\n",res);
+}
+
+uint8_t Mpu6050::mpu_dmp_get_data(float *pitch,float *roll,float *yaw)
+{
+ return inv.mpu_dmp_get_data(pitch,roll,yaw);
 }

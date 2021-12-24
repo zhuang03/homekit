@@ -39,8 +39,7 @@ void file_maneger_init(void)
     run_data->sendBuf = (uint8_t *)calloc(1, SEND_BUFFER_SIZE);
 }
 
-void file_maneger_process(AppController *sys,
-                          const Imu_Action *action)
+void file_maneger_process(AppController *sys, const Imu_Action *action)
 {
     lv_scr_load_anim_t anim_type = LV_SCR_LOAD_ANIM_NONE;
 
